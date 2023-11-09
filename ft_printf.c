@@ -11,61 +11,58 @@
 /* ************************************************************************** */
 #include "printf.h"
 
+int	ft_format(va_list args, const char *format)
+{
+	int	n_oct;
+
+	if (*format == 'c')
+		n_oct = ft_putchar(va_arg(args, int));
+	else if (*format == 's')
+		n_oct = ft_putstr(va_arg(args, char *));
+	else if (ft_strchr("di", *format))
+		n_oct = ft_putnbr(va_arg(args, int));
+	else if (*format == 'u')
+		n_oct = ft_putnbr_unsigned(va_arg(args, unsigned int));
+	else if (*format == 'p')
+		n_oct = write(1, "0x", 2) + ft_puthex((long)va_arg(args, void *), 'x');
+	else if (ft_strchr("xX", *format))
+		n_oct = ft_puthex(va_arg(args, unsigned int), *format);
+	else
+		n_oct = write(1, "%", 1);
+	return (n_oct);
+}
+
 int	ft_printf(const char *format, ...)
 {
-	int			len;
+	int			n_oct;
 	va_list	args;
 
 	if (ft_check(format) == -1)
 		return (-1);
 	va_start(args, format);
-	len = 0;
+	n_oct = 0;
 	while (*format)
 	{
-		if (*format == '%' && *(format + 1))
+		if (*format == '%')
 		{
-			if (ft_strchr("sp", *(++format)))
-				len += ft_write_ptr(*format, va_arg(args, void *));
-			else if (*format == '%')
-				write(1, "%", 1);
-			else
-				len += ft_write_int(*format, va_arg(args, long));
+			format++;
+			if (*format)
+				n_oct += ft_format(args, format);
 		}
 		else
-			len += write(1, format, 1);
+			n_oct += write(1, format, 1);
 		format++;
 	}
 	va_end(args);
-	return (len);
+	return (n_oct);
 }
 
-int	ft_write_ptr(char type, void *ptr)
+int main()
 {
-	unsigned long int	valptr;
+	void * ptr = malloc(15 * sizeof(char));
+    int count = ft_printf("%p", ptr);
+	int check = printf("\n%p", ptr);
+    printf("\n%d : %d", count, check);
+	printf("\n% 5d", count);
 
-	if (type == 's')
-	{
-		return (ft_putstr((char *)ptr));
-	}
-	valptr = (long) ptr;
-	return (ft_puthex(valptr));
 }
-
-int	ft_write_int(char type, long nb)
-{
-	if (type == 'c')
-		return (write(1, &nb, 1));
-	else if (ft_strchr("diu", type))
-		return (ft_putnbr(nb));
-	else if (type == 'x')
-		return (ft_puthex(nb));
-	else
-		return (ft_puthexbig(nb));
-}
-
-/*int main()
-{
-    int count = ft_printf("%c\n%x\n%s\n", 87, 1500, "florian");
-    int check = printf("%c\n%x\n%s\n", 87, 1500, "florian");
-    printf("%d : %d", count, check);
-}*/

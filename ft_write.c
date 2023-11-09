@@ -11,6 +11,14 @@
 /* ************************************************************************** */
 #include "printf.h"
 
+int ft_putchar(char c)
+{
+    char    d;
+
+    d = (char)c;
+    return (write(1, &d, 1));
+}
+
 int	ft_putstr(const char *format)
 {
 	int	n_oct;
@@ -25,7 +33,7 @@ int	ft_putstr(const char *format)
 	return (n_oct);
 }
 
-int	ft_putnbr(long nb)
+int	ft_putnbr(int nb)
 {
 	int	len;
 
@@ -42,24 +50,18 @@ int	ft_putnbr(long nb)
 	return (len);
 }
 
-int	ft_puthex(long nb)
+int ft_putnbr_unsigned(unsigned int nb)
 {
 	int	len;
 
 	len = 0;
-	if (nb < 0)
-	{
-		write(1, "-", 1);
-		nb *= -1;
-		len++;
-	}
-	if (nb > 15)
-		len += ft_puthex(nb / 16);
-	len += write(1, &"0123456789abcdef"[nb % 16], 1);
+	if (nb > 9)
+		len += ft_putnbr(nb / 10);
+	len += write(1, &"0123456789"[nb % 10], 1);
 	return (len);
 }
 
-int	ft_puthexbig(long nb)
+int	ft_puthex(unsigned int nb, char key)
 {
 	int	len;
 
@@ -71,7 +73,9 @@ int	ft_puthexbig(long nb)
 		len++;
 	}
 	if (nb > 15)
-		len += ft_puthexbig(nb / 16);
-	len += write(1, &"0123456789ABCDEF"[nb % 16], 1);
-	return (len);
+		len += ft_puthex(nb / 16, key);
+	if (key == 'x')
+        return (len + write(1, &"0123456789abcdef"[nb % 16], 1));
+    return (len + write(1, &"0123456789ABCDEF"[nb % 16], 1));
+
 }
