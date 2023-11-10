@@ -6,7 +6,7 @@
 /*   By: ochetrit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:10:17 by ochetrit          #+#    #+#             */
-/*   Updated: 2023/11/09 09:39:20 by ochetrit         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:14:01 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "printf.h"
@@ -34,7 +34,7 @@ int	ft_format(va_list args, const char *format)
 
 int	ft_printf(const char *format, ...)
 {
-	int			n_oct;
+	int		n_oct;
 	va_list	args;
 
 	if (ft_check(format) == -1)
@@ -57,12 +57,12 @@ int	ft_printf(const char *format, ...)
 	return (n_oct);
 }
 
-int main()
+/* int main(int ac, char **av)
 {
-	void * ptr = malloc(15 * sizeof(char));
-    int count = ft_printf("%p", ptr);
-	int check = printf("\n%p", ptr);
-    printf("\n%d : %d", count, check);
-	printf("\n% 5d", count);
-
+	(void) ac;
+	(void) av;
+    int count = ft_printf("%x", atoi(av[1]));
+	int check =  printf("\n%x", atoi(av[1]));
+    printf("\n%d : %d", count, check - 1);
 }
+ */
