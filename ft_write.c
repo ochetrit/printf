@@ -9,7 +9,7 @@
 /*   Updated: 2023/11/10 10:01:27 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_putchar(char c)
 {
@@ -24,6 +24,8 @@ int	ft_putstr(const char *format)
 	int	n_oct;
 
 	n_oct = 0;
+	if (!format)
+		return (write(1, "(null)", 6));
 	while (*format)
 	{
 		write(1, format, 1);
@@ -63,19 +65,19 @@ int	ft_putnbr_unsigned(unsigned int nb)
 	return (len);
 }
 
-int	ft_puthex(long nb, char key)
+int	ft_puthex(unsigned long nb, char key, char ptr)
 {
 	int	len;
 
 	len = 0;
-	if (nb < 0)
+	if (ptr == 'Y')
 	{
-		write(1, "-", 1);
-		nb *= -1;
-		len++;
+		if (nb == 0)
+			return (write(1, "(nil)", 5));
+		len += write(1, "0x", 2);
 	}
 	if (nb > 15)
-		len += ft_puthex(nb / 16, key);
+		len += ft_puthex(nb / 16, key, 'n');
 	if (key == 'x')
 		return (len + write(1, &"0123456789abcdef"[nb % 16], 1));
 	return (len + write(1, &"0123456789ABCDEF"[nb % 16], 1));

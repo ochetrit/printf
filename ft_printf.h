@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTF_H
+#ifndef FT_PRINTF_H
 
-# define  PRINTF_H
+# define  FT_PRINTF_H
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdarg.h>
@@ -21,7 +21,7 @@
 
 int	ft_putchar(char c);
 int	ft_putnbr(int nb);
-int	ft_puthex(long nb, char key);
+int	ft_puthex(unsigned long nb, char key, char ptr);
 int	ft_strchr(const char *str, int character);
 int	ft_write_ptr(char type, void *ptr);
 int	ft_write_int(char type, long int nb);

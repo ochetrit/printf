@@ -9,7 +9,7 @@
 /*   Updated: 2023/11/09 09:10:16 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_strchr(const char *str, int character)
 {

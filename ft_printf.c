@@ -9,7 +9,7 @@
 /*   Updated: 2023/11/10 09:14:01 by ochetrit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_format(va_list args, const char *format)
 {
@@ -24,9 +24,9 @@ int	ft_format(va_list args, const char *format)
 	else if (*format == 'u')
 		n_oct = ft_putnbr_unsigned(va_arg(args, unsigned int));
 	else if (*format == 'p')
-		n_oct = write(1, "0x", 2) + ft_puthex((long)va_arg(args, void *), 'x');
+		n_oct = ft_puthex(va_arg(args, unsigned long), 'x', 'Y');
 	else if (ft_strchr("xX", *format))
-		n_oct = ft_puthex(va_arg(args, unsigned int), *format);
+		n_oct = ft_puthex(va_arg(args, unsigned int), *format, 'n');
 	else
 		n_oct = write(1, "%", 1);
 	return (n_oct);
@@ -61,8 +61,8 @@ int	ft_printf(const char *format, ...)
 {
 	(void) ac;
 	(void) av;
-    int count = ft_printf("%x", atoi(av[1]));
-	int check =  printf("\n%x", atoi(av[1]));
+	void *ptr = "suuu";
+    int count = ft_printf("%p", ptr);
+	int check =  printf("\n%p", ptr);
     printf("\n%d : %d", count, check - 1);
-}
- */
+} */

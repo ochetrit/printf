@@ -14,7 +14,7 @@ SRCS = ft_format.c ft_write.c ft_printf.c
 
 OBJS = $(SRCS:.c=.o)
 
-NAME = printf.a
+NAME = libftprintf.a
 
 CC = cc
 
